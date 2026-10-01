@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinguaBridge - Modern Language Translation Tool</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-language"></i>
+        </div>
+        <div>
+          <h1 class="brand-title">LinguaBridge</h1>
+          <p class="brand-subtitle">Smart AI-Powered Translation Tool</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="aboutBtn" class="icon-btn" title="Developer & Internship Details">
+          <i class="fa-solid fa-user-graduate"></i>
+        </button>
+        <button id="historyBtn" class="icon-btn" title="Translation History">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Translator Card -->
+    <main class="translator-card">
+      
+      <!-- Top Language Selector Toolbar -->
+      <div class="translator-toolbar">
+        <!-- Source Language Select -->
+        <div class="lang-select-wrapper">
+          <select id="sourceLangSelect" class="lang-select">
+            <!-- Populated via languages.js -->
+          </select>
+          <i class="fa-solid fa-chevron-down select-arrow"></i>
+        </div>
+
+        <!-- Swap Languages Button -->
+        <button id="swapLangBtn" class="swap-btn" title="Swap Languages (Alt+S)">
+          <i class="fa-solid fa-right-left"></i>
+        </button>
+
+        <!-- Target Language Select -->
+        <div class="lang-select-wrapper">
+          <select id="targetLangSelect" class="lang-select">
+            <!-- Populated via languages.js -->
+          </select>
+          <i class="fa-solid fa-chevron-down select-arrow"></i>
+        </div>
+      </div>
+
+      <!-- Quick Pick Language Chips -->
+      <div class="quick-languages" id="quickLanguagesBar">
+        <!-- Populated via app.js -->
+      </div>
+
+      <!-- Translation Side-by-Side Grid -->
+      <div class="translation-grid">
+        
+        <!-- Source Input Box -->
+        <div class="translation-box source-box">
+          <textarea id="sourceText" placeholder="Type or paste text to translate... (Ctrl+Enter to translate)"></textarea>
+          
+          <div class="box-footer">
+            <div class="box-actions">
+              <button id="micBtn" class="action-btn" title="Speech Input (Voice Dictation)">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button id="sourceSpeakBtn" class="action-btn" title="Listen Source Text">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button id="clearBtn" class="action-btn" title="Clear Input">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <span class="char-counter" id="charCounter">0 / 5000</span>
+          </div>
+        </div>
+
+        <!-- Target Output Box -->
+        <div class="translation-box target-box">
+          <div id="outputText" class="output-text output-placeholder">Translation will appear here...</div>
+
+          <div class="box-footer">
+            <div class="box-actions">
+              <button id="targetSpeakBtn" class="action-btn" title="Listen Translation">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button id="copyBtn" class="action-btn" title="Copy Translation">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+            <span class="char-counter" id="providerBadge">Google Translate</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Action Bar -->
+      <div class="bottom-bar">
+        <label class="auto-toggle">
+          <input type="checkbox" id="autoTranslateToggle" checked>
+          <span>Auto-translate on typing</span>
+        </label>
+
+        <button id="translateBtn" class="translate-btn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Translate</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Footer Developer Credits -->
+    <footer class="app-footer">
+      <p>Developed by <strong>Aasim Khan</strong> | <span class="intern-badge"><i class="fa-solid fa-award"></i> CodeAlpha Internship Project</span></p>
+    </footer>
+  </div>
+
+  <!-- Translation History Modal -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="history-modal">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fa-solid fa-clock-rotate-left"></i> Translation History</h2>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <button id="clearHistoryBtn" class="quick-chip" style="color:#ef4444; border-color:#ef4444;">Clear All</button>
+          <button id="closeHistoryBtn" class="icon-btn" style="width:36px; height:36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="history-list" id="historyList">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Developer Profile & Internship Modal -->
+  <div class="modal-overlay" id="aboutModal">
+    <div class="history-modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fa-solid fa-circle-info"></i> Developer & Project Info</h2>
+        <button id="closeAboutBtn" class="icon-btn" style="width:36px; height:36px;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center;">
+        <div class="dev-avatar">
+          <i class="fa-solid fa-user-astronaut"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-main);">Aasim Khan</h3>
+          <p style="font-size: 0.9rem; color: var(--accent-primary); font-weight: 600;">CodeAlpha Software Engineering Intern</p>
+        </div>
+
+        <div class="candidate-card">
+          <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600;">Candidate Details</div>
+          <div style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; margin-top: 0.5rem;">
+            <label for="candidateIdInput" style="font-weight: 600; font-size: 0.9rem;">Candidate ID:</label>
+            <input type="text" id="candidateIdInput" class="candidate-input" placeholder="e.g. CA/DF1/312332" value="CA/DF1/312332">
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">(Edit and save your official Candidate ID above)</p>
+        </div>
+
+        <div style="width: 100%; text-align: left; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-size: 0.85rem; line-height: 1.6;">
+          <p><strong>Project:</strong> TASK 1 - Language Translation Tool</p>
+          <p><strong>Organization:</strong> CodeAlpha Internship Program</p>
+          <p><strong>Technologies:</strong> HTML5, CSS3, JavaScript (ES6+), Google Translate API, Speech Recognition & Speech Synthesis APIs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Files -->
+  <script src="languages.js"></script>
+  <script src="translator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
